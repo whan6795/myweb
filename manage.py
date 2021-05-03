@@ -2,7 +2,8 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from app import create_app
-from exts import db,make_password
+from exts import db
+from utils.login import make_password
 from apps.admin import models as admin_models
 
 app = create_app()
