@@ -1,3 +1,6 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+H-ui.admin_v3.1.3.1/
+test.py
+__pycache__/
