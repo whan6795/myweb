@@ -140,30 +140,38 @@
             <td>{{ message['boottime'] }}</td>
         </tr>
         <tr>
-            <td>本站已运行</td>
-            <td>{{ message['time'] }}分</td>
+            <td>自上一次服务重启后，本站已运行</td>
+            <td>{{ message['time'] }}</td>
         </tr>
 
         <tr>
             <td>虚拟内存</td>
-            <td>52480M</td>
+            <td>{{message['mem']}}G</td>
+        </tr>
+        <tr>
+            <td>内存使用率</td>
+            <td>{{message['mem_percent']}}%</td>
+        </tr>
+        <tr>
+            <td>磁盘容量</td>
+            <td>{{message['disk']}}G</td>
+        </tr>
+        <tr>
+            <td>磁盘使用率</td>
+            <td>{{message['disk_percent']}}%</td>
         </tr>
         <tr>
             <td>当前程序占用内存</td>
             <td>3.29M</td>
         </tr>
         <tr>
-            <td>Asp.net所占内存</td>
-            <td>51.46M</td>
+            <td>CPU使用率</td>
+            <td>{{message['cpu_percent']}}%</td>
         </tr>
         <tr>
             <td>当前Session数量</td>
             <td>
-                {% if message['type']==1 %}
-                175.27.243.34
-                {% else %}
-                游客无权限查看
-                {% endif %}
+                {{message['sessionnum']}}
             </td>
         </tr>
 
