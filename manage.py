@@ -15,8 +15,9 @@ manager.add_command('db', MigrateCommand)
 @manager.option('-u', '--username', dest='username')
 @manager.option('-p', '--password', dest='password')
 @manager.option('-t', '--type', dest='type')  # 1为超级管理员，0为游客
-def create_user(username, password, type):
-    user = admin_models.Users(username=username, password=make_password(password), type=type)
+@manager.option('-ln','--login_num',dest='login_num')
+def create_user(username, password, type, login_num):
+    user = admin_models.Users(username=username, password=make_password(password), type=type, login_num=login_num)
     db.session.add(user)
     db.session.commit()
     print('添加成功')
