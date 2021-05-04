@@ -7,7 +7,7 @@ SECRET_KEY = 'wh971220'
 # flask-sqlalchemy配置
 DIALECT = 'mysql'
 DRIVER = 'pymysql'
-USERNAME = 'root'
+USERNAME = 'ubuntu'
 PASSWORD = 'wh001108'
 PORT = '3306'
 HOST = '127.0.0.1'
