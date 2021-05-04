@@ -93,13 +93,13 @@
         <tbody>
         <tr>
             <th width="30%">服务器计算机名</th>
-            <td><span id="lbServerName">http://127.0.0.1/</span></td>
+            <td><span id="lbServerName">{{message['nodename']}}</span></td>
         </tr>
         <tr>
             <td>服务器IP地址</td>
             <td>
                 {% if message['type']==1 %}
-                175.27.243.34
+                {{message['hostip']}}
                 {% else %}
                 游客无权限查看
                 {% endif %}
@@ -119,14 +119,10 @@
                 {% endif %}
             </td>
         </tr>
-        <tr>
-            <td>服务器IIS版本</td>
-            <td>Microsoft-IIS/6.0</td>
-        </tr>
 
         <tr>
             <td>服务器操作系统</td>
-            <td>Ubuntu 18.04.4 LTS (GNU/Linux 4.15.0-142-generic x86_64)</td>
+            <td>{{message['sysname']}}</td>
         </tr>
 
         <tr>
@@ -141,17 +137,13 @@
 
         <tr>
             <td>服务器上次启动到现在已运行</td>
+            <td>{{ message['boottime'] }}</td>
+        </tr>
+        <tr>
+            <td>本站已运行</td>
             <td>{{ message['time'] }}分</td>
         </tr>
 
-        <tr>
-            <td>CPU 总数</td>
-            <td>4</td>
-        </tr>
-        <tr>
-            <td>CPU 类型</td>
-            <td>x86 Family 6 Model 42 Stepping 1, GenuineIntel</td>
-        </tr>
         <tr>
             <td>虚拟内存</td>
             <td>52480M</td>
@@ -174,21 +166,12 @@
                 {% endif %}
             </td>
         </tr>
-        <tr>
-            <td>当前SessionID</td>
-            <td>
-                {% if message['type']==1 %}
-                175.27.243.34
-                {% else %}
-                游客无权限查看
-                {% endif %}
-            </td>
-        </tr>
+
         <tr>
             <td>当前系统用户名</td>
             <td>
                 {% if message['type']==1 %}
-                ubuntu
+                {{message['sysuser']}}
                 {% else %}
                 游客无权限查看
                 {% endif %}
@@ -216,6 +199,8 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
+
+
 
 </script>
 <!--/此乃百度统计代码，请自行删除-->
