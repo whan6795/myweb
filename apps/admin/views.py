@@ -3,6 +3,8 @@ from flask import Blueprint, session, request, render_template, redirect, url_fo
 from .models import Users
 from utils.login import make_password, check_password, check_login
 from datetime import datetime
+import os, psutil, socket
+import platform
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -38,12 +40,25 @@ def index():
 def welcome():
     is_login = check_login()
     if is_login:
+        # info = os.uname()
         is_login['ip'] = request.remote_addr
-        with open('utils/start.txt','r') as f:
+        with open('utils/start.txt', 'r') as f:
             start = float(f.readline())
-            time = datetime.timestamp(datetime.now())-start
+            time_now = datetime.now()
+            time = datetime.timestamp(time_now)- start
+        is_login['sysname'] = platform.platform()
+        is_login['nodename'] = socket.gethostname()
+        if is_login['type']==1:
+            is_login['hostip'] = socket.gethostbyname(socket.gethostname())
+            is_login['sysuser'] = psutil.users()[0].name
+        boot_start_time = datetime.fromtimestamp(psutil.boot_time())
+        boot_time = time_now - boot_start_time
+        is_login['boottime'] = str(boot_time).split('.')[0]
+        # is_login['release'] = info.release
+        # is_login['machine'] = info.machine
+
         is_login['now'] = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M')
-        is_login['time'] = int(time/60)
+        is_login['time'] = int(time / 60)
         return render_template('welcome.html', message=is_login)
 
 
