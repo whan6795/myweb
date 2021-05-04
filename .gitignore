@@ -4,3 +4,4 @@ __pycache__/
 env/
 migrations/
 config.py
+/utils/start.txt
