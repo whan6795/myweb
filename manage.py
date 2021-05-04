@@ -20,7 +20,12 @@ def create_user(username, password, type):
     db.session.add(user)
     db.session.commit()
     print('添加成功')
-
+@manager.option('-ln','--login_num',dest='login_num')
+def edit_all_user(login_num):
+    user = admin_models.Users.query.filter().update({'login_num':login_num})
+    # user.login_num = login_num
+    db.session.commit()
+    print('更改成功')
 
 if __name__ == '__main__':
     manager.run()
