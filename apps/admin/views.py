@@ -59,7 +59,6 @@ def welcome():
         if is_login['type'] == 1:
             is_login['hostip'] = '175.27.243.34'
             is_login['sessionnum'] = len(session)
-            is_login['sysuser'] = psutil.users()[0].name
         boot_start_time = datetime.fromtimestamp(psutil.boot_time())
         # print(boot_start_time)
         boot_time = time_now - boot_start_time
