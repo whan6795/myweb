@@ -1,12 +1,13 @@
 # encoding:utf-8
 from flask import Blueprint, session, request, render_template, redirect, url_for
 from .models import Users
-from apps.common.models import CommonUser
+from apps.common.models import CommonUser, Article
 from utils.login import make_password, check_password, check_login
 from datetime import datetime
 import psutil, socket
 import platform
 from exts import db
+
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
@@ -15,6 +16,9 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     else:
+        a = request.form
+        for i in a:
+            print(i,a.get(i))
         username = request.form.get('username')
         password = request.form.get('password')
         user = Users.query.filter_by(username=username).first()
@@ -84,14 +88,30 @@ def logout():
     if is_login:
         session.pop('username')
         session.pop('type')
-        return redirect(url_for('admin.login'))
-    return '未登录'
+    return redirect(url_for('admin.login'))
 
 
-@bp.route('/add/article')
+
+@bp.route('/add/article', methods=['GET', 'POST'])
 def add_article():
     is_login = check_login()
-    return render_template('article-add.html')
+    if is_login and is_login['type']==1:
+        if request.method == 'GET':
+            return render_template('article-add.html')
+        else:
+            title = request.form.get('title')
+            type = request.form.get('type')  # 文章类型，0代表...1代表...
+            # status = request.form.get('status')  # 0不可见，1可见
+            content = request.form.get('content')
+            comments = request.form.get('comments')  # 0不允许评论，1允许评论
+            author_id = request.form.get('author_id')
+            article = Article(title=title, type=type, status=status, content=content, comments=comments,
+                              author_id=author_id)
+            db.session.add(article)
+            db.session.commit()
+            return render_template('index-2.html', message='添加成功')
+    else:
+        return redirect(url_for('admin.login'))
 
 
 @bp.route('/add/member')
