@@ -27,6 +27,6 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    with open('utils/start.txt','w') as f:
+    with open('utils/start.txt', 'w') as f:
         f.write(str(datetime.timestamp(datetime.now())))
     app.run(debug=True, host='0.0.0.0', port='8080')
