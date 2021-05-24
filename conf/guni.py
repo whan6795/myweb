@@ -4,7 +4,7 @@ from gevent import monkey
 monkey.patch_all()
 debug = True
 loglevel = 'debug'
-bind = '0.0.0.0:8080'
+bind = '127.0.0.1:8080'
 pidfile = 'log/gunicorn.pid'
 logfile = 'log/debug.log'
 workers = 3
