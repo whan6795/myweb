@@ -1,0 +1,20 @@
+{% extends '/store/base.html' %}
+{% block title %}
+    虚拟商城
+{% endblock %}
+
+{% block article %}
+<section class="nav_section"><img src="{{url_for('static',filename='/store/img/csdn_static/2.png')}}" alt="" width="100%"></section>
+    {% for course_data in course_data_s %}
+    <section class="main_section">
+        <h1>{{ course_data.category }}</h1>
+        {% for course in course_data.course_s %}
+        <figure>
+
+        </figure>
+        {% endfor %}
+    </section>
+    {% endfor %}
+
+{% endblock %}
+

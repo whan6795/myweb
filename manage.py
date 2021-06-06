@@ -1,12 +1,24 @@
 # encoding:utf-8
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from app import create_app
+from flask import Flask
+from apps.admin import bp as admin_bp
+from apps.common import bp as common_bp
+from apps.girl import bp as girl_bp
+from apps.store import bp as store_bp
+from apps.front import bp as front_bp
 from exts import db
 from utils.login import make_password
 from apps.admin import models as admin_models
 
-app = create_app()
+app = Flask(__name__)
+app.register_blueprint(admin_bp)
+app.register_blueprint(girl_bp)
+app.register_blueprint(store_bp)
+app.register_blueprint(common_bp)
+app.register_blueprint(front_bp)
+app.config.from_object('config')
+db.init_app(app)
 manager = Manager(app)
 Migrate(app, db)
 manager.add_command('db', MigrateCommand)

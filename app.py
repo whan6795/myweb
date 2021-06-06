@@ -3,6 +3,8 @@ DEBUG = True
 from flask import Flask
 from apps.admin import bp as admin_bp
 from apps.common import bp as common_bp
+from apps.girl import bp as girl_bp
+from apps.store import bp as store_bp
 from apps.front import bp as front_bp
 from exts import db
 from flask_wtf import CSRFProtect
@@ -10,6 +12,8 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.register_blueprint(admin_bp)
+app.register_blueprint(girl_bp)
+app.register_blueprint(store_bp)
 app.register_blueprint(common_bp)
 app.register_blueprint(front_bp)
 app.config.from_object('config')

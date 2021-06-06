@@ -16,9 +16,6 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     else:
-        a = request.form
-        for i in a:
-            print(i,a.get(i))
         username = request.form.get('username')
         password = request.form.get('password')
         user = Users.query.filter_by(username=username).first()
