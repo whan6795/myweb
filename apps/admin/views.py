@@ -11,6 +11,11 @@ from exts import db
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
+@bp.route('/', methods=['GET', 'POST'])
+def re_to_index():
+    return redirect(url_for('admin.index'))
+
+
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -88,11 +93,10 @@ def logout():
     return redirect(url_for('admin.login'))
 
 
-
 @bp.route('/add/article', methods=['GET', 'POST'])
 def add_article():
     is_login = check_login()
-    if is_login and is_login['type']==1:
+    if is_login and is_login['type'] == 1:
         if request.method == 'GET':
             return render_template('article-add.html')
         else:
