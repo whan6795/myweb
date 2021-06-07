@@ -53,18 +53,31 @@
         </section>
     </aside>
     <div class="blogitem">
+        {% for i in message['articles']%}
         <article>
-            <h2 class="title"><a href="#">测试文章</a></h2>
+            <h2 class="title"><a href="#">{{i['title']}}</a></h2>
             <ul class="text">
-                <p>测试文章内容123123123123</p>
+                <p>{{i['content']}}</p>
             </ul>
             <div class="textfoot">
                 <a href="#">阅读全文（未实现）</a>
             </div>
         </article>
-
-        <div class="pages"><span>1</span><a href="#" hidefocus="">2</a><a href="#" hidefocus="">3</a><a href="#"
-                                                                                                        class="next">下一页&gt;&gt;</a>
+        {%endfor%}
+        <div class="pages">
+            {% if message['paginate'].has_prev %}
+            <a href="?page={{ message['paginate'].prev_num }}" class="next">&lt;&lt;上一页</a>
+            {% endif %}
+            {% for i in message['paginate'].iter_pages() %}
+            {% if i==message['page'] %}
+            <span>{{i}}</span>
+            {% else %}
+            <a href="?page={{ i }}">{{ i }}</a>
+            {% endif %}
+            {% endfor %}
+            {% if message['paginate'].has_next %}
+            <a href="?page={{ message['paginate'].next_num }}" class="next">下一页&gt;&gt;</a>
+            {% endif %}
         </div>
     </div>
 </div>
