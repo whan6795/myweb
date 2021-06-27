@@ -9,8 +9,14 @@ from exts import db
 bp = Blueprint('store', __name__, url_prefix='/store')
 
 
+# 前台部分
+
+
 @bp.route('/')
 def index():
+    is_login = check_login()
+    # if not is_login:
+    #     return redirect(url_for('store.login'))
     return render_template('/store/index.html')
 
 
@@ -54,3 +60,22 @@ def register():
         db.session.commit()
         session['store_username'] = username
         return redirect(url_for('store.index'))
+
+
+@bp.route('/product_info')
+def product_info():
+    message = {
+        'p_id': 1,
+        'p_name': '测试商品',
+        'p_detail': '商品说明商品说明商品说明商品说明商品说明商品说明商品说明商品说明商品说明',
+        'p_price': 1223,
+        'p_picture_path': '/store/images/produkt_slid1.png'
+    }
+    return render_template('/store/product_page.html', message=message)
+
+
+@bp.route('/buy')
+def buy():
+    p_id = request.args.get('p_id')
+    print(p_id)
+    return render_template('/store/shopping_cart.html', data=p_id)

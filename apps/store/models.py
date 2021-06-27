@@ -19,4 +19,5 @@ class Commodity(db.Model):  # 商品
     name = db.Column(db.String(50), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     picture = db.Column(db.LargeBinary(length=2048))
-    remain_num = db.Column(db.Integer,nullable=False)
+    remain_num = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
