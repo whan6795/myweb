@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/><!-- /Added by HTTrack -->
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <title>Login</title>
+    <link rel="shortcut icon" href="{{url_for('static',filename='favicon.ico')}}">
+    <link href="{{url_for('static',filename='/store/css/style.css')}}" media="screen" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static',filename='/store/css/grid.css')}}" media="screen" rel="stylesheet" type="text/css">
+
+    <script src="{{url_for('static',filename='/store/js/jquery-1.7.2.min.js')}}"></script>
+    <script src="{{url_for('static',filename='/store/js/html5.js')}}"></script>
+    <script src="{{url_for('static',filename='/store/js/jflow.plus.js')}}"></script>
+    <script src="{{url_for('static',filename='/store/js/jquery.carouFredSel-5.2.2-packed.js')}}"></script>
+    <script src="{{url_for('static',filename='/store/js/checkbox.js')}}"></script>
+    <script src="{{url_for('static',filename='/store/js/radio.js')}}"></script>
+    <script src="{{url_for('static',filename='/store/js/selectBox.js')}}"></script>
+
+
+    <script>
+	$(document).ready(function() {
+		$("select").selectBox();
+	});
+
+    </script>
+
+    <script>
+	$(document).ready(function(){
+		$("#myController").jFlow({
+			controller: ".control", // must be class, use . sign
+			slideWrapper : "#jFlowSlider", // must be id, use # sign
+			slides: "#slider",  // the div where all your sliding divs are nested in
+			selectedWrapper: "jFlowSelected",  // just pure text, no sign
+			width: "984px",  // this is the width for the content-slider
+			height: "480px",  // this is the height for the content-slider
+			duration: 400,  // time in miliseconds to transition one slide
+			prev: ".slidprev", // must be class, use . sign
+			next: ".slidnext", // must be class, use . sign
+			auto: true	
+		});
+	});
+
+    </script>
+    <script>
+	$(function() {
+	  $('#list_product').carouFredSel({
+		prev: '#prev_c1',
+		next: '#next_c1',
+		auto: false
+	  });
+          $('#list_product2').carouFredSel({
+		prev: '#prev_c2',
+		next: '#next_c2',
+		auto: false
+	  });
+	  $('#list_banners').carouFredSel({
+		prev: '#ban_prev',
+		next: '#ban_next',
+		scroll: 1,
+		auto: false
+	  });
+	  $(window).resize();
+	});
+
+    </script>
+    <script>
+       $(document).ready(function(){
+	      $("button").click(function(){
+		     $(this).addClass('click')
+	      });             
+       })
+
+    </script>
+
+</head>
+<body>
+<div class="container_12">
+
+
+    <div class="clear"></div>
+
+    <header id="branding">
+        <div class="grid_3">
+            <hgroup>
+                <h1 id="site_logo"><a href="index.html" title=""><img
+                        src="{{url_for('static',filename='/store/images/tju_logo.jpg')}}"
+                        alt="在线商城"/></a></h1>
+                <h2 id="site_description">虚拟在线商城</h2>
+            </hgroup>
+        </div><!-- .grid_3 -->
+
+
+        <div class="grid_6">
+            <ul id="cart_nav">
+                <li>
+
+                </li>
+            </ul>
+
+            <nav class="private">
+                <ul>
+
+                </ul>
+            </nav><!-- .private -->
+        </div><!-- .grid_6 -->
+    </header><!-- #branding -->
+</div><!-- .container_12 -->
+
+<div class="clear"></div>
+
+
+
+<section id="main" class="entire_width">
+    <div class="container_12">
+        <div id="content">
+            <div class="grid_12">
+                <h1 class="page_title">新用户注册</h1>
+            </div><!-- .grid_12 -->
+
+
+            <div class="grid_6">
+                <form class="registed" method="post" action="">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <h2>注册</h2>
+
+
+                    <div class="email">
+                        <strong>用户名:</strong><sup class="surely">*</sup><br/>
+                        <input type="text" name="username" class=""/>
+                    </div><!-- .email -->
+
+                    <div class="password">
+                        <strong>密码:</strong><sup class="surely">*</sup><br/>
+                        <input type="text" name="password" class=""/>
+<!--                        <a class="forgot" href="#">Forgot Your Password?</a>-->
+                    </div><!-- .password -->
+
+
+                    <div class="submit">
+                        <input type="submit" value="登录"/>
+                        {% if message %}
+                        <sup class="surely">*</sup><span>{{message}}</span>
+                        {% endif %}
+                    </div><!-- .submit -->
+                </form><!-- .registed -->
+            </div><!-- .grid_6 -->
+        </div><!-- #content -->
+
+        <div class="clear"></div>
+    </div><!-- .container_12 -->
+</section><!-- #main -->
+
+<div class="clear"></div>
+
+<footer>
+
+</footer>
+
+</body>
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/><!-- /Added by HTTrack -->
+</html>
