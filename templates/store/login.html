@@ -126,7 +126,9 @@
                 <h2>注册</h2>
                 <p>注册一个账户以使用网站。在此测试版本中，注册账户默认拥有￥500资金.</p>
                 <div class="clear"></div>
-                <button class="account">注册</button>
+                <form method="get" action="{{url_for('store.register')}}">
+                <button class="account" type="submit">注册</button>
+                </form>
             </div><!-- .grid_6 -->
 
             <div class="grid_6">
