@@ -23,3 +23,11 @@ def check_login():
             'type': session.get('type')
         }
     return False
+
+
+def check_store_login():
+    username = session.get('store_username')
+    if username:
+        return username
+    return False
+

@@ -1,8 +1,7 @@
 # encoding:utf-8
 from flask import Blueprint, session, request, render_template, redirect, url_for
-from .models import StoreUsers
-from apps.common.models import CommonUser, Article
-from utils.login import make_password, check_password, check_login
+from .models import StoreUsers, Commodity
+from utils.login import *
 from datetime import datetime
 from exts import db
 
@@ -14,16 +13,27 @@ bp = Blueprint('store', __name__, url_prefix='/store')
 
 @bp.route('/')
 def index():
-    is_login = check_login()
-    # if not is_login:
-    #     return redirect(url_for('store.login'))
-    return render_template('/store/index.html')
+    is_login = check_store_login()
+    if not is_login:
+        return redirect(url_for('store.login'))
+    commodities = Commodity.query.all()
+    re = []
+    for commodity in commodities:
+        data = {
+            'id': commodity.uid,
+            'picture': commodity.picture,
+            'name': commodity.name,
+            'price': commodity.price
+        }
+        re.append(data)
+
+    return render_template('/store/index.html', data=re)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        return render_template('login.html')
+        return render_template('store/login.html')
     else:
         username = request.form.get('username')
         password = request.form.get('password')
@@ -38,10 +48,9 @@ def login():
 
 @bp.route('/logout')
 def logout():
-    is_login = check_login()
+    is_login = check_store_login()
     if is_login:
-        session.pop('username')
-        session.pop('type')
+        session.pop('store_username')
     return redirect(url_for('store.login'))
 
 
@@ -55,7 +64,7 @@ def register():
             return render_template('/store/register.html', message='用户名重复')
         password = request.form.get('password')
         password = make_password(password)
-        new_user = StoreUsers(username=username, password=password)
+        new_user = StoreUsers(username=username, password=password, money=500)
         db.session.add(new_user)
         db.session.commit()
         session['store_username'] = username
@@ -64,18 +73,57 @@ def register():
 
 @bp.route('/product_info')
 def product_info():
+    is_login = check_store_login()
+    if not is_login:
+        return redirect(url_for('store.login'))
+    p_id = request.args.get('p_id')
+    print(p_id)
+    commodity = Commodity.query.filter_by(uid=p_id).first()
     message = {
-        'p_id': 1,
-        'p_name': '测试商品',
-        'p_detail': '商品说明商品说明商品说明商品说明商品说明商品说明商品说明商品说明商品说明',
-        'p_price': 1223,
-        'p_picture_path': '/store/images/produkt_slid1.png'
+        'p_id': commodity.uid,
+        'p_name': commodity.name,
+        'p_detail': commodity.detail,
+        'p_price': commodity.price,
+        'p_picture_path': commodity.picture if commodity.picture else '/store/images/null_picture.jpg'
     }
     return render_template('/store/product_page.html', message=message)
 
 
 @bp.route('/buy')
 def buy():
+    is_login = check_store_login()
+    if not is_login:
+        return redirect(url_for('store.login'))
+    s_user = StoreUsers.query.filter_by(username=is_login).first()
     p_id = request.args.get('p_id')
-    print(p_id)
-    return render_template('/store/shopping_cart.html', data=p_id)
+    commodity = Commodity.query.filter_by(uid=p_id).first()
+    message = {
+        'done_or_not': 'not',
+        'p_id': commodity.uid,
+        'p_name': commodity.name,
+        'p_detail': commodity.detail,
+        'p_price': commodity.price,
+        'p_picture_path': commodity.picture if commodity.picture else '/store/images/null_picture.jpg',
+        'remain_money': s_user.money
+    }
+    return render_template('/store/shopping_cart.html', message=message)
+
+
+@bp.route('/done')
+def buy_done():
+    is_login = check_store_login()
+    if not is_login:
+        return redirect(url_for('store.login'))
+    s_user = StoreUsers.query.filter_by(username=is_login).first()
+    price = int(request.args.get('price'))
+    s_money = int(s_user.money)
+    if s_money >= price:
+        s_user.money = str(s_money - price)
+        db.session.commit()
+        message = {
+            'done_or_not': 'done',
+            'remain_money': s_user.money
+        }
+    else:
+        message = {'done_or_not': 'no_enough_money', 'remain_money': s_user.money, 'price': price}
+    return render_template('/store/shopping_cart.html', message=message)

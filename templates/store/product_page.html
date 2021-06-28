@@ -17,7 +17,6 @@
     <script src="{{url_for('static',filename='/store/js/jquery-1.7.2.min.js')}}"></script>
     <script src="{{url_for('static',filename='/store/js/html5.js')}}"></script>
     <script src="{{url_for('static',filename='/store/js/jflow.plus.js')}}"></script>
-
     <script src="{{url_for('static',filename='/store/js/jquery.carouFredSel-5.2.2-packed.js')}}"></script>
     <script src="{{url_for('static',filename='/store/js/checkbox.js')}}"></script>
     <script src="{{url_for('static',filename='/store/js/radio.js')}}"></script>
@@ -183,11 +182,11 @@
                 <div class="grid_5">
                     <div class="entry_content">
 
-                        <p{{message['p_detail']}}</p>
+                        <p>{{message['p_detail']}}</p>
                         <div class="ava_price">
 
                             <div class="price">
-                                <div class="price_new">￥{{message['p_price']}}</div>
+                                <div class="price_new">价格:  ￥{{message['p_price']}}</div>
 
                             </div><!-- .price -->
                         </div><!-- .ava_price -->
@@ -197,7 +196,7 @@
 
                             <div class="cart">
                                 <form action="" method="post">
-                                    <a href="{{url_for('store.buy',p_id=message['id'])}}" class="bay">
+                                    <a href="{{url_for('store.buy',p_id=message['p_id'])}}" class="bay">
                                             买一个！
                                     </a>
 

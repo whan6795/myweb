@@ -102,7 +102,7 @@ def add_article():
         else:
             title = request.form.get('title')
             type = request.form.get('type')  # 文章类型，0代表...1代表...
-            # status = request.form.get('status')  # 0不可见，1可见
+            status = request.form.get('status')  # 0不可见，1可见
             content = request.form.get('content')
             comments = request.form.get('comments')  # 0不允许评论，1允许评论
             author_id = request.form.get('author_id')
